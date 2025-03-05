@@ -82,7 +82,7 @@ bash run.sh
 ```
 Follow the instructions to launch the setup. The script initializes 4 Docker containers:
 
-- **ReNew_ldes-server**: This is the LDES server, configured with [configs/ldes-server/renew-observations](configs/ldes-server/renew-observations) files using the bash script. The project is [VSDS-LDESServer4J](https://github.com/Informatievlaanderen/VSDS-LDESServer4J).
+- **ReNew_ldes-server**: This is the LDES server, configured with `configs/ldes-server/renew-observations` files using the bash script. The project is [VSDS-LDESServer4J](https://github.com/Informatievlaanderen/VSDS-LDESServer4J).
 - **ldes-postgres**: Persistent storage for the LDES server.
 - **pyroscope**: A tool to monitor and visualize the LDES server’s performance.
 - **ReNew_ldes-orchestrator**: This component processes the pipeline to map the original JSON to RDF* as described earlier. The project is [VSDS-Linked-Data-Interactions](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions).
