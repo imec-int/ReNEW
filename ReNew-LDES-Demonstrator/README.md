@@ -78,7 +78,7 @@ devices:be61a56a-038b-44dc-86f2-8c319739efc8/{current-time}  # The subject is de
 ### Run
 
 ```bash
-run.sh
+bash run.sh
 ```
 Follow the instructions to launch the setup. The script initializes 4 Docker containers:
 
@@ -87,5 +87,5 @@ Follow the instructions to launch the setup. The script initializes 4 Docker con
 - **pyroscope**: A tool to monitor and visualize the LDES server’s performance.
 - **ReNew_ldes-orchestrator**: This component processes the pipeline to map the original JSON to RDF* as described earlier. The project is [VSDS-Linked-Data-Interactions](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions).
 
-The LDES stream for `sosa:Observation` can be accessed at [http://localhost:8088/renew-observations/](http://localhost:8088/renew-observations/).  
+The LDES stream for `sosa:Observation` can be accessed at [http://localhost:8088/renew-observations](http://localhost:8088/renew-observations).  
 For a time-fragmented view with "day" granularity based on `prov:generatedAtTime`, visit [http://localhost:8088/renew-observations/by-time](http://localhost:8088/renew-observations/by-time).
