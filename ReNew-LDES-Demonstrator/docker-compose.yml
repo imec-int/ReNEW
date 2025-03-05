@@ -1,0 +1,55 @@
+version: "3.3"
+services:
+  ldes-server:
+    container_name: ReNew_ldes-server
+    image: ldes/ldes-server:latest
+    environment:
+      - SPRING_CONFIG_LOCATION=/config/
+      - PYROSCOPE_CONFIGURATION_FILE=/config/pyroscope.properties
+    volumes:
+      - ./docker-compose/server.config.yml:/config/application.yml:ro
+      - ./docker-compose/pyroscope.properties:/config/pyroscope.properties:ro
+    ports:
+      - "8080:8080"
+      - "8087:8087"
+      - "8088:8088"
+      - "8089:8089"
+    networks:
+      - ldes
+    depends_on:
+      - postgres
+  postgres:
+    container_name: ldes-postgres
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=test
+    networks:
+      - ldes
+  pyroscope:
+    image: grafana/pyroscope:latest
+    ports:
+      - 4040:4040
+    networks:
+      - ldes
+  ldio-workbench-observations:
+    container_name: ReNew_ldes-orchestrator
+    image: ldes/ldi-orchestrator:latest
+    environment:
+      - SPRING_CONFIG_NAME=application
+      - SPRING_CONFIG_LOCATION=/config/
+    volumes:
+      - ./configs/ldes-ldio/ldio-renew-devices-ghent.yml:/config/application.yml:ro
+      - ./configs/ldes-ldio/devices-ghent.rq:/ldio/devices-ghent.rq:ro
+      - ./configs/ldes-ldio/devices-zelzate.rq:/ldio/devices-zelzate.rq:ro
+    ports:
+      - ${LDIO_WORKBENCH_PORT:-8081}:8080
+    networks:
+      - ldes
+    profiles:
+      - delay-started
+networks:
+  ldes:

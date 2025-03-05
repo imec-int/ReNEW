@@ -1,0 +1,32 @@
+springdoc:
+  swagger-ui:
+    path: /v1/swagger
+ldes-server:
+  host-name: "http://localhost:8080"
+  use-relative-url: true
+  ingest:
+    port: 8089
+  fetch:
+    port: 8088
+  admin:
+    port: 8087
+management:
+  tracing:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
+pyroscope:
+  agent:
+    enabled: true
+spring:
+  datasource:
+    url: jdbc:postgresql://ldes-postgres:5432/test
+    username: admin
+    password: admin
+
+#server:
+#  servlet:
+#    context-path: /ldes
