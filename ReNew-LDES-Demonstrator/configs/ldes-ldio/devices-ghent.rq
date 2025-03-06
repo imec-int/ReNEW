@@ -1,0 +1,67 @@
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX devices: <https://renew.iccs.gr/projects/41837b47-5e2f-4e25-973b-ae74980b7ea8/devices/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX waterkwaliteit: <https://data.vlaanderen.be/ns/waterkwaliteit#>
+PREFIX units: <https://si-digital-framework.org/SI/units/>
+PREFIX schema: <https://schema.org/>
+PREFIX terms:  <http://purl.org/dc/terms/>
+
+CONSTRUCT {
+  ?observation rdf:type sosa:Observation.
+  ?observation sosa:madeBySensor ?sensor.
+  ?observation waterkwaliteit:locatie ?finalLocation.
+  ?observation prov:generatedAtTime ?generatedTime.
+  ?observation qudt:numericValue ?finalNumericValue.
+  ?observation qudt:value ?finalStringValue.
+  ?observation terms:isVersionOf ?sensor.
+  ?observation sosa:observedProperty _:blankNode.
+  _:blankNode rdfs:label ?label.
+  _:blankNode qudt:siExactMatch ?finalUnit.
+  _:blankNode qudt:hasQuantityKind ?quantityKind.
+  _:blankNode schema:additionalProperty ?additionalProperty.
+}
+WHERE {
+  # Define fixed values
+  # Ghent 8471de9c-6446-4c7f-ae3b-1171c7bef625
+  # Location 51°06'12.5"N 3°43'37.3"E, ‘Gent’. URL is
+  BIND("8471de9c-6446-4c7f-ae3b-1171c7bef625" AS ?sensorID)
+  BIND("51°06'12.5\"N 3°43'37.3\"E" AS ?defaultLocation)
+
+  # Define variables
+  BIND(IRI(CONCAT(STR(devices:), ?sensorID)) AS ?sensor)
+  BIND(IRI(CONCAT(STR(?sensor), "/", STR(NOW()))) AS ?observation)
+
+  # Ensure ?subject is defined somewhere in the dataset
+  ?subject prov:generatedAtTime ?generatedTime.
+  ?subject sosa:observedProperty ?nextedResult.
+  ?nextedResult rdfs:label ?label.
+  ?nextedResult qudt:siExactMatch ?unit.
+  ?nextedResult schema:additionalProperty ?additionalProperty.
+  ?nextedResult qudt:hasQuantityKind ?quantityKind.
+
+  # Handle optional location binding
+  OPTIONAL { ?subject waterkwaliteit:locatie ?location. }
+  BIND(COALESCE(?location, ?defaultLocation) AS ?finalLocation)
+
+  # Handle optional numeric and string values
+  OPTIONAL { ?subject qudt:numericValue ?numericValue. }
+  BIND(COALESCE(?numericValue, rdf:nil) AS ?finalNumericValue)
+
+  OPTIONAL { ?subject qudt:value ?stringValue. }
+  BIND(COALESCE(?stringValue, rdf:nil) AS ?finalStringValue)
+
+  # Handle unit mapping using units prefix
+  BIND(
+    IF(?unit = "C", units:degreeCelsius,
+      IF(?unit = "V", units:volt,
+        IF(?unit = "m", units:meter,
+          ?unit  # Default: keep original if no match
+        )
+      )
+    ) AS ?finalUnit
+  )
+}
