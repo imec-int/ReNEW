@@ -47,7 +47,7 @@ The model is built on RDF* using blank nodes. This is supported by the [VSDS LDE
 
 ```turtle
 # Nested structure using RDF* with blank nodes
-@prefix devices: <https://renew.iccs.gr/projects/be61a56a-038b-44dc-86f2-8c319739efc8/devices/> .
+@prefix devices: <https://renew.iccs.gr/projects/41837b47-5e2f-4e25-973b-ae74980b7ea8/devices/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
