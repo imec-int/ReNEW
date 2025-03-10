@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   ldes-server:
-    container_name: ReNew_ldes-server
+    container_name: ReNEW_ldes-server
     image: ldes/ldes-server:latest
     environment:
       - SPRING_CONFIG_LOCATION=/config/
@@ -36,7 +36,7 @@ services:
     networks:
       - ldes
   ldio-workbench-observations:
-    container_name: ReNew_ldes-orchestrator
+    container_name: ReNEW_ldes-orchestrator
     image: ldes/ldi-orchestrator:latest
     environment:
       - SPRING_CONFIG_NAME=application

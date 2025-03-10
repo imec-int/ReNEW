@@ -1,8 +1,8 @@
-# ReNew-LDES-Demonstrator
+# ReNEW-LDES-Demonstrator
 
-## LDES Demonstrator for ReNew
+## LDES Demonstrator for ReNEW
 
-LDES demonstration for the ReNew project.
+LDES demonstration for the ReNEW project.
 
 ## Data Source
 The data sources are the following environment sensors:
@@ -82,10 +82,10 @@ bash run.sh
 ```
 Follow the instructions to launch the setup. The script initializes 4 Docker containers:
 
-- **ReNew_ldes-server**: This is the LDES server, configured with `configs/ldes-server/renew-observations` files using the bash script. The project is [VSDS-LDESServer4J](https://github.com/Informatievlaanderen/VSDS-LDESServer4J).
+- **ReNEW_ldes-server**: This is the LDES server, configured with `configs/ldes-server/renew-observations` files using the bash script. The project is [VSDS-LDESServer4J](https://github.com/Informatievlaanderen/VSDS-LDESServer4J).
 - **ldes-postgres**: Persistent storage for the LDES server.
 - **pyroscope**: A tool to monitor and visualize the LDES server’s performance.
-- **ReNew_ldes-orchestrator**: This component processes the pipeline to map the original JSON to RDF* as described earlier. The project is [VSDS-Linked-Data-Interactions](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions).
+- **ReNEW_ldes-orchestrator**: This component processes the pipeline to map the original JSON to RDF* as described earlier. The project is [VSDS-Linked-Data-Interactions](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions).
 
 The LDES stream for `sosa:Observation` can be accessed at [http://localhost:8088/renew-observations](http://localhost:8088/renew-observations).  
 For a time-fragmented view with "day" granularity based on `prov:generatedAtTime`, visit [http://localhost:8088/renew-observations/by-time](http://localhost:8088/renew-observations/by-time).
